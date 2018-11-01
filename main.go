@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/binary"
+	"flag"
 	"fmt"
 	"net"
 	"regexp"
@@ -94,7 +95,6 @@ func danmu(conn *net.TCPConn, room_id string) {
 		} else {
 			content := string(buf[:n])
 			if judgeChatmsg(content) {
-				fmt.Println(content)
 				nick, msg := nickNameAndChatMsg(content)
 				fmt.Printf("%s : %s\n", nick, msg)
 			}
@@ -117,5 +117,7 @@ func main() {
 		return
 	}
 	go keepAlive(conn)
-	danmu(conn, "288016")
+	var roomID string
+	flag.StringVar(&roomID, "c", "156277", "room_id")
+	danmu(conn, roomID)
 }
