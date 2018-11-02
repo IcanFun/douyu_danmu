@@ -22,7 +22,7 @@ func Int2Byte(data int32) (ret []byte) {
 IP 地址:openbarrage.douyutv.com 端口:8601
 */
 func connect() (conn *net.TCPConn, err error) {
-	fmt.Println("-----*-----DouYu_Spider-----*-----\n")
+	fmt.Println("-----*-----DouYu_Spider-----*-----")
 	addr, err := net.ResolveTCPAddr("tcp4", "openbarrage.douyutv.com:8601")
 	if err != nil {
 		fmt.Println(err.Error())
@@ -63,12 +63,12 @@ func judgeChatmsg(content string) bool {
 }
 
 func nickNameAndChatMsg(content string) (nickName, chatMsg string) {
-	reg := regexp.MustCompile("nn@=(.*)/txt@")
+	reg := regexp.MustCompile("nn@=([^n]*)/txt@")
 	matchs := reg.FindStringSubmatch(content)
 	if matchs != nil && len(matchs) > 1 {
 		nickName = matchs[1]
 	}
-	reg = regexp.MustCompile("txt@=(.*)/cid@")
+	reg = regexp.MustCompile("txt@=([^n]*)/cid@")
 	matchs = reg.FindStringSubmatch(content)
 	if matchs != nil && len(matchs) > 1 {
 		chatMsg = matchs[1]
