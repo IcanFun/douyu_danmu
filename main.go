@@ -68,10 +68,24 @@ func nickNameAndChatMsg(content string) (nickName, chatMsg string) {
 	if matchs != nil && len(matchs) > 1 {
 		nickName = matchs[1]
 	}
+	if nickName == "" {
+		reg = regexp.MustCompile("txt@=(.*)/cid@")
+		matchs = reg.FindStringSubmatch(content)
+		if matchs != nil && len(matchs) > 1 {
+			nickName = matchs[1]
+		}
+	}
 	reg = regexp.MustCompile("txt@=([^n]*)/cid@")
 	matchs = reg.FindStringSubmatch(content)
 	if matchs != nil && len(matchs) > 1 {
 		chatMsg = matchs[1]
+	}
+	if chatMsg == "" {
+		reg = regexp.MustCompile("txt@=(.*)/cid@")
+		matchs = reg.FindStringSubmatch(content)
+		if matchs != nil && len(matchs) > 1 {
+			chatMsg = matchs[1]
+		}
 	}
 	return
 }
